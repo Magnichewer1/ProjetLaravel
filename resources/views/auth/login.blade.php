@@ -44,4 +44,9 @@
             </x-primary-button>
         </div>
     </form>
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 </x-guest-layout>

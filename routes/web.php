@@ -3,6 +3,8 @@
 use App\Http\Controllers\ControleurMembres;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 Route::get('/', function () {
 return view('welcome');
 });
@@ -32,4 +34,9 @@ Route::patch('miseAJour/{id}', 'App\Http\Controllers\ControleurMembres@miseAJour
 Route::get('/identite','App\Http\Controllers\ControleurMembres@identite');
 Route::get('/protege','App\Http\Controllers\ControleurMembres@acces_protege')
 ->middleware('auth');
+
+Route::get('/admin/users', 'App\Http\Controllers\AdminController@showUsersEnAttente')->name('admin.users');
+Route::post('/admin/users/{id}/approve', 'App\Http\Controllers\AdminController@approveUser')->name('admin.users.approve');
+
+
 

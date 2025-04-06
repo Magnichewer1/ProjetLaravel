@@ -24,10 +24,20 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        
         $request->authenticate();
 
+        
+        $user = Auth::user();
+        if (!$user->is_approved) {
+            abort('403', 'Vous n\'etes pas approuvé');
+            return redirect()->route('login');
+        }
+
+        
         $request->session()->regenerate();
 
+        
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

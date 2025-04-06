@@ -28,7 +28,7 @@ class ControleurMembres extends Controller
         
         
         $un_membre = Membre::find($numero);
-        if (!$un_membre) {
+        /* if (!$un_membre) {
             // Si le membre n'existe pas, afficher une page d'erreur
             return view('pages_site/erreur');
         }
@@ -36,7 +36,7 @@ class ControleurMembres extends Controller
         // Si le membre existe, vérifier l'autorisation d'accès
         if ($utilisateur->id !== $un_membre->id) {
             abort(403, "Vous n'avez pas l'autorisation de voir ce profil.");
-        }
+        } */
         
         return view('pages_site/membre', compact('un_membre'));
     }
@@ -61,7 +61,7 @@ class ControleurMembres extends Controller
         
         $un_membre = Membre::find($numero);
        
-        if (!$un_membre) {
+        /* if (!$un_membre) {
         
             return view('pages_site/erreur');
         }
@@ -69,7 +69,7 @@ class ControleurMembres extends Controller
         
         if ($utilisateur->id !== $un_membre->id) {
             abort(403, "Vous n'avez pas l'autorisation de modifier ce profil.");
-        } 
+        }  */
         
         return view('pages_site/edition', compact('un_membre'));
     }

@@ -29,22 +29,35 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+    
+       
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_approved' => false, // L'utilisateur n'est pas approuvé à l'inscription
         ]);
-
+    
+    
         event(new Registered($user));
-
+    
+        
+        if (!$user->is_approved) {
+            abort('403','Votre compte doit etre approuver');
+            return redirect()->route('login');
+        }
+    
+    
         Auth::login($user);
-
+    
+        
         return redirect(route('dashboard', absolute: false));
     }
+    
 }
